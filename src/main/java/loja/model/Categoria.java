@@ -1,15 +1,21 @@
 package loja.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String nome;
+
+    // getters e setters
 
     public Long getId() {
         return id;
@@ -26,8 +32,4 @@ public class Categoria {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    private String nome;
-
-    // getters e setters
 }
