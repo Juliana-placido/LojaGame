@@ -1,18 +1,22 @@
 package loja.controller;
 
+import jakarta.validation.Valid;
 import loja.model.Categoria;
 import loja.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/categorias")
+@CrossOrigin
+@Validated
 public class CategoriaController {
+
     @Autowired
     private CategoriaRepository categoriaRepository;
 
@@ -28,13 +32,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> criarCategoria(@Valid @RequestBody Categoria categoria) {
         Categoria novaCategoria = categoriaRepository.save(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaCategoria);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id, @Valid @RequestBody Categoria categoria) {
         if (!categoriaRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -52,4 +56,3 @@ public class CategoriaController {
         return ResponseEntity.noContent().build();
     }
 }
-
